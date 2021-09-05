@@ -14,3 +14,11 @@ Contains images and ideas for the crate construction
 ## Fan
 Contains the schematic files for the fan and LED MOSFET controller.
 
+## Lid
+Contains the Arduino source code for the lid mechanism.
+
+## Notes
+Just contains random notes used while making the box
+
+## Sounds
+Contains the sound files and editing information. It also contains the DFPlayer notes.
