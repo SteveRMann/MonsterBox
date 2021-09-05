@@ -10,3 +10,7 @@ An ultrasonic fog transducer from Amazon is also inside the box to add fog effec
 
 ## Crate
 Contains images and ideas for the crate construction
+
+## Fan
+Contains the schematic files for the fan and LED MOSFET controller.
+
