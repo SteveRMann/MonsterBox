@@ -8,5 +8,5 @@ bumps the door open anot an inch.  By controlling the door, we can open for a pe
 
 An ultrasonic fog transducer from Amazon is also inside the box to add fog effects.
 
-##Crate
+## Crate
 Contains images and ideas for the crate construction
