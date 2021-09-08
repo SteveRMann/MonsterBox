@@ -22,3 +22,9 @@ Just contains random notes used while making the box
 
 ## Sounds
 Contains the sound files and editing information. It also contains the DFPlayer notes.
+
+## servoSweep
+Code to sweep the servo 0-180 degrees.
+
+# servoManualSweep
+Code used to calibrate the PWM endpoints for servo.h
