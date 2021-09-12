@@ -14,6 +14,9 @@ Contains images and ideas for the crate construction
 ## Fan
 Contains the schematic files for the fan and LED MOSFET controller.
 
+## HBridgeTest
+Code to test the H-Bridges
+
 ## Lid
 Contains the Arduino source code for the lid mechanism.
 
@@ -28,3 +31,6 @@ Code to sweep the servo 0-180 degrees.
 
 # servoManualSweep
 Code used to calibrate the PWM endpoints for servo.h
+
+# tail
+Code to make the dragon's tail sweep back and forth
