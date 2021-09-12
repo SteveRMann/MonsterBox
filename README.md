@@ -29,8 +29,8 @@ Contains the sound files and editing information. It also contains the DFPlayer 
 ## servoSweep
 Code to sweep the servo 0-180 degrees.
 
-# servoManualSweep
+## servoManualSweep
 Code used to calibrate the PWM endpoints for servo.h
 
-# tail
+## tail
 Code to make the dragon's tail sweep back and forth
