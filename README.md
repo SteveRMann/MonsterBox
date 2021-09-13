@@ -11,6 +11,9 @@ An ultrasonic fog transducer from Amazon is also inside the box to add fog effec
 ## Crate
 Contains images and ideas for the crate construction
 
+## eggDrop
+This is the code that operates a servo to drop an egg.
+
 ## Fan
 Contains the schematic files for the fan and LED MOSFET controller.
 
