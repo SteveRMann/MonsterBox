@@ -9,7 +9,8 @@ Servo servoTwo;
 
 int servo1Position;
 int servo2Position;
-const int openDelay = 350;          //How long the drop is open.
+const int dropDelay = 700;          //How long the drop servo is open.
+const int loadDelay = 450;          //How long the load servo is open.
 
 void setup() {
   while (!Serial);
@@ -31,8 +32,8 @@ void setup() {
   servoOne.attach(servo1Pin, 625, 2600);    //PWM range for SG90 servos
   servoTwo.attach(servo2Pin, 625, 2600);    //PWM range for SG90 servos
 
-  close1();
-  close2();
+  dropServoClose();
+  loadServoClose();
   delay(1000);
 }
 
@@ -43,14 +44,13 @@ void loop() {
   // draw a menu on the serial port
   Serial.println(F( "-----------------------------" ));
   Serial.println(F( "MENU:" ));
-  Serial.println(F( "1) Close 1" ));
-  Serial.println(F( "2) Open 1" ));
+  Serial.println(F( "1) Close both" ));
+  Serial.println(F( "2) Open both" ));
   Serial.println(F( "3) Drop one egg" ));
-  Serial.println(F( "4) Close 2" ));
-  Serial.println(F( "5) Open 2" ));
-  Serial.println(F( "6) Drop one egg" ));
-  Serial.println(F( "7) Drop ten eggs" ));
-  Serial.println(F( "9) 180° sweep" ));
+  Serial.println(F( "4) Drop six eggs" ));
+  Serial.println(F( "5) Drop ten eggs" ));
+  Serial.println(F( "8) Preload" ));
+  //Serial.println(F( "9) 180° sweep" ));
   Serial.println(F( "-----------------------------" ));
 
   do {
@@ -62,61 +62,58 @@ void loop() {
 
     switch ( c )
     {
-      case '1':                                   // Close 1
-        Serial.println(F("1- Close1"));
-        close1();
+      case '1':                                   // Close Both
+        Serial.println(F("1- Close Both"));
+        dropServoClose();
+        loadServoClose();
         isValidInput = true;
         break;
 
-      case '2':                                   // Open 1
-        Serial.println(F("1- Open1"));
-        open1();
+      case '2':                                   // Open both
+        Serial.println(F("1- Open both"));
+        dropServoOpen();
+        loadServoOpen();
         isValidInput = true;
         break;
 
       case '3':                                   // Drop one egg
         dropEgg(1);
-        delay(500);
         isValidInput = true;
         break;
 
-      case '4':                                   // Close 2
-        Serial.println(F("4- Close2"));
-        close2();
+      case '4':                                   // Drop six eggs
+        dropEgg(6);
+        //delay(500);
         isValidInput = true;
         break;
 
-      case '5':                                   // Open 2
-        Serial.println(F("5- Open2"));
-        open2();
-        isValidInput = true;
-        break;
-
-      case '6':                                   // Drop one egg
-        dropEgg(1);
-        delay(500);
-        isValidInput = true;
-        break;
-
-      case '7':                                   // Drop 10 eggs
+      case '5':                                   // Drop 10 eggs
         dropEgg(10);
-        delay(500);
+        //delay(500);
         isValidInput = true;
         break;
 
-      case '9':                                   // Sweep 0-180ºuntil any alpha key is entered.
-        Serial.println(F("9- Sweep. Reset to stop"));
-        while (isValidInput == true) {
-          servoOne.write(180);
-          servoTwo.write(180);
-          delay(2000);
-          servoOne.write(0);
-          servoTwo.write(0);
-          delay(2000);
-        }
+      case '8':                                   // Preload
+        Serial.println(F("8- Preload"));
+        dropServoClose();
+        loadServoOpen();
         isValidInput = true;
         break;
 
+      /*
+            case '9':                                   // Sweep 0-180ºuntil any alpha key is entered.
+              Serial.println(F("9- Sweep. Reset to stop"));
+              while (isValidInput == true) {
+                servoOne.write(180);
+                servoTwo.write(180);
+                delay(2000);
+                servoOne.write(0);
+                servoTwo.write(0);
+                delay(2000);
+              }
+              isValidInput = true;
+              break;
+      */
 
       default:
         // wrong character! display the menu again!
@@ -131,53 +128,43 @@ void loop() {
 void dropEgg(int howMany) {
   printf("\nDropping\n");
   if (servo1Position != 90) {            //Make sure we're closed.
-    close1();
-    close2();
+    dropServoClose();
+    loadServoClose();
     delay(500);
   }
   while (howMany > 0) {
     howMany--;
     printf(" egg# %d.\n", howMany);
-    //    if (servo1Position == 0) {
-    open1();
-    delay(openDelay);
-    close1();
+    dropServoOpen();                            //Exit
+    delay(dropDelay);
+    dropServoClose();
+    delay(dropDelay);                   //Let 'drop' close before 'load' opens
 
-    open2();
-    delay(openDelay);
-    close2();
 
-    //delay(1000);
-    //    }
+    loadServoOpen();                            //Load
+    delay(loadDelay);
+    loadServoClose();
+
+    delay(2000);                     //Time between eggs
   }
 }
 
-void open1() {
-  //printf("\nOpening1\n");
+void dropServoOpen() {                          //Open the exit
   servoOne.write(0);
   servo1Position = 0;
 }
 
-void close1() {
-  //printf("\nClosing1\n");
+void dropServoClose() {                         //Close the exit
   servoOne.write(90);
   servo1Position = 90;
-  /*
-    for (int i = 0; i <= 90; i++) {
-    servoOne.write(i);
-    delay(50);
-    }
-  */
 }
 
-void open2() {
-  //printf("\nOpening2\n");
+void loadServoOpen() {                          //Open the preload servo
   servoTwo.write(0);
   servo2Position = 0;
 }
 
-void close2() {
-  //printf("\nClosing2\n");
+void loadServoClose() {                         //Close the preload
   servoTwo.write(90);
   servo2Position = 90;
 }
