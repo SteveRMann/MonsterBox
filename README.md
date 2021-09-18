@@ -13,6 +13,7 @@ Contains images and ideas for the crate construction
 
 ## eggDrop
 This is the code that operates a servo to drop an egg.
+EggDrop is separate from the monster box, but basically it drops a plastic egg on command.
 
 ## Fan
 Contains the schematic files for the fan and LED MOSFET controller.
